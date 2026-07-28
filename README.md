@@ -288,16 +288,13 @@ curl -X POST "https://tu-app.netlify.app/api/convert-distance?value=5&from=kilom
 10. **Obtener la URL pública**: al finalizar el despliegue, Netlify asigna una URL del tipo `https://<nombre-aleatorio>.netlify.app` (puedes renombrarla desde **Site settings → Site details → Change site name**).
 
 11. **Probar los endpoints desde la URL pública**:
-
     ```
-   
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=100&from=metros&to=pies
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-temperature?value=25&from=celsius&to=fahrenheit
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/convert-temperature?value=300&from=kelvin&to=celsius
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=50&from=kilos&to=libras
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=1000&from=gramos&to=kilos
-
     ```
 
 ## URL pública de la API
