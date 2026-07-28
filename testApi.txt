@@ -1,0 +1,10 @@
+Happy Path:
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=100&from=metros&to=pies
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-temperature?value=25&from=celsius&to=fahrenheit
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/convert-temperature?value=300&from=kelvin&to=celsius
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=50&from=kilos&to=libras
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=1000&from=gramos&to=kilos
+
+Negative Path:
+https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=1000&from=km&to=kilos

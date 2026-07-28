@@ -2,6 +2,8 @@
 
 API REST serverless para conversión de unidades de **distancia**, **temperatura** y **peso**, construida con Node.js y desplegada como **Netlify Functions**. Es una API pura (sin frontend): cada tipo de conversión se implementa como una función serverless independiente que responde en formato JSON.
 
+**URL pública:** https://tarea1sistemdistribuidos-jensonperez.netlify.app
+
 ## Tecnologías utilizadas
 
 - **Node.js** (JavaScript, sin frameworks)
@@ -53,13 +55,7 @@ Con Netlify CLI instalado, levanta un servidor local que simula el entorno de Ne
 netlify dev
 ```
 
-Por defecto quedará disponible en `http://localhost:8888`. Las funciones se pueden probar directamente en:
-
-- `http://localhost:8888/api/convert-distance?value=5&from=kilometros&to=millas`
-- `http://localhost:8888/api/convert-temperature?value=25&from=celsius&to=fahrenheit`
-- `http://localhost:8888/api/convert-weight?value=50&from=kilos&to=libras`
-
-(También responden en la ruta directa `http://localhost:8888/.netlify/functions/convert-distance`, pero se recomienda usar `/api/...` que es la ruta pública final.)
+Por defecto queda disponible en `http://localhost:8888`, con las mismas rutas `/api/...` que en producción (ver sección [Endpoints disponibles](#endpoints-disponibles)).
 
 ## Endpoints disponibles
 
@@ -86,22 +82,6 @@ Los tres endpoints reciben los mismos parámetros:
 **Temperatura** (`/api/convert-temperature`): `celsius`, `kelvin`, `fahrenheit`
 
 **Peso** (`/api/convert-weight`): `kilos`, `gramos`, `toneladas`, `libras`, `onzas`
-
-## Ejemplos de uso
-
-```
-GET /api/convert-distance?value=5&from=kilometros&to=millas
-GET /api/convert-distance?value=100&from=metros&to=pies
-GET /api/convert-distance?value=10&from=pies&to=metros
-
-GET /api/convert-temperature?value=25&from=celsius&to=fahrenheit
-GET /api/convert-temperature?value=300&from=kelvin&to=celsius
-GET /api/convert-temperature?value=32&from=fahrenheit&to=celsius
-
-GET /api/convert-weight?value=50&from=kilos&to=libras
-GET /api/convert-weight?value=1000&from=gramos&to=kilos
-GET /api/convert-weight?value=2&from=toneladas&to=kilos
-```
 
 ## Ejemplos de respuestas exitosas
 
@@ -172,13 +152,13 @@ Valor no numérico (`GET /api/convert-distance?value=abc&from=kilometros&to=mill
 }
 ```
 
-Unidad no válida (`GET /api/convert-distance?value=5&from=kilometro&to=millas`) → **400**
+Unidad no válida (`GET /api/convert-weight?value=1000&from=km&to=kilos`) → **400**
 
 ```json
 {
   "success": false,
   "error": "Unidad no válida",
-  "message": "La unidad 'kilometro' no está soportada para conversión de distancia"
+  "message": "La unidad 'km' no está soportada para conversión de peso"
 }
 ```
 
@@ -202,38 +182,28 @@ Método HTTP no permitido (`POST /api/convert-distance`) → **405**
 }
 ```
 
-## Pruebas
+## Pruebas sobre la API pública
 
-### Desde el navegador
+Los siguientes enlaces son peticiones GET reales sobre el despliegue en producción: se pueden abrir directamente en el navegador, o importar en Postman/Insomnia como una colección GET.
 
-Simplemente pega la URL en la barra de direcciones (funciona porque son peticiones GET):
+### Happy path
 
-```
-https://tu-app.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas
-```
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=100&from=metros&to=pies
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-temperature?value=25&from=celsius&to=fahrenheit
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-temperature?value=300&from=kelvin&to=celsius
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=50&from=kilos&to=libras
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=1000&from=gramos&to=kilos
 
-### Desde Postman / Insomnia / curl
+### Negative path
 
-1. Crea una petición **GET**.
-2. Pega la URL completa con sus query params, por ejemplo:
-   `https://tu-app.netlify.app/api/convert-weight?value=1000&from=gramos&to=kilos`
-3. Envía la petición y revisa el código de estado (200/400/405) y el cuerpo JSON de la respuesta.
+- https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=1000&from=km&to=kilos (unidad `km` no soportada → 400)
 
-Con `curl`:
+### Con curl
 
 ```bash
-curl "https://tu-app.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas"
-curl "https://tu-app.netlify.app/api/convert-distance?value=100&from=metros&to=pies"
-curl "https://tu-app.netlify.app/api/convert-temperature?value=25&from=celsius&to=fahrenheit"
-curl "https://tu-app.netlify.app/api/convert-temperature?value=300&from=kelvin&to=celsius"
-curl "https://tu-app.netlify.app/api/convert-weight?value=50&from=kilos&to=libras"
-curl "https://tu-app.netlify.app/api/convert-weight?value=1000&from=gramos&to=kilos"
-
-# Casos de error
-curl "https://tu-app.netlify.app/api/convert-distance?from=kilometros&to=millas"          # falta value
-curl "https://tu-app.netlify.app/api/convert-distance?value=abc&from=kilometros&to=millas" # value no numérico
-curl "https://tu-app.netlify.app/api/convert-distance?value=5&from=kilometro&to=millas"    # unidad inválida
-curl -X POST "https://tu-app.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas" # método no permitido
+curl "https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas"
+curl -X POST "https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas" # 405
 ```
 
 ## Despliegue en Netlify
@@ -247,21 +217,19 @@ curl -X POST "https://tu-app.netlify.app/api/convert-distance?value=5&from=kilom
    npm install
    ```
 
-3. **Ejecutar el proyecto localmente**:
+3. **Ejecutar y probar el proyecto localmente**:
 
    ```bash
    netlify dev
    ```
 
-4. **Probar las funciones localmente** abriendo en el navegador o con `curl`:
-
    ```
    http://localhost:8888/api/convert-distance?value=5&from=kilometros&to=millas
    ```
 
-5. **Crear un repositorio en GitHub**: en GitHub, crea un repositorio nuevo (por ejemplo `unit-converter-api`), vacío, sin README (ya tenemos uno).
+4. **Crear un repositorio en GitHub**: crea un repositorio nuevo (por ejemplo `unit-converter-api`), vacío, sin README (ya tenemos uno).
 
-6. **Subir el proyecto a GitHub**:
+5. **Subir el proyecto a GitHub**:
 
    ```bash
    git init
@@ -272,35 +240,21 @@ curl -X POST "https://tu-app.netlify.app/api/convert-distance?value=5&from=kilom
    git push -u origin main
    ```
 
-7. **Crear o conectar el proyecto en Netlify**:
+6. **Crear o conectar el proyecto en Netlify**:
    - Ingresa a [app.netlify.com](https://app.netlify.com/).
    - Click en **"Add new site" → "Import an existing project"**.
    - Selecciona **GitHub** y autoriza el acceso.
    - Elige el repositorio `unit-converter-api`.
 
-8. **Configurar el despliegue**:
+7. **Configurar el despliegue**:
    - Netlify detecta automáticamente `netlify.toml`, así que el directorio de funciones (`netlify/functions`) y las redirecciones ya quedan configurados.
    - Build command: (vacío, no se requiere build).
    - Publish directory: `.` (ya definido en `netlify.toml`).
 
-9. **Publicar la API**: click en **"Deploy site"**. Netlify instalará dependencias (ninguna en este caso), empaquetará las funciones y publicará el sitio.
+8. **Publicar y obtener la URL pública**: click en **"Deploy site"**. Al finalizar, Netlify asigna una URL del tipo `https://<nombre-del-sitio>.netlify.app` (renombrable desde **Site settings → Site details → Change site name**). Este proyecto quedó publicado en:
 
-10. **Obtener la URL pública**: al finalizar el despliegue, Netlify asigna una URL del tipo `https://<nombre-aleatorio>.netlify.app` (puedes renombrarla desde **Site settings → Site details → Change site name**).
+   ```
+   https://tarea1sistemdistribuidos-jensonperez.netlify.app
+   ```
 
-11. **Probar los tres endpoints desde la URL pública**:
-
-    ```
-    https://tu-app.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas
-    https://tu-app.netlify.app/api/convert-temperature?value=25&from=celsius&to=fahrenheit
-    https://tu-app.netlify.app/api/convert-weight?value=50&from=kilos&to=libras
-    ```
-
-## URL pública de la API
-
-> Reemplazar con la URL real una vez desplegada en Netlify:
-
-```
-https://TU-APP.netlify.app/api/convert-distance?value=5&from=kilometros&to=millas
-https://TU-APP.netlify.app/api/convert-temperature?value=25&from=celsius&to=fahrenheit
-https://TU-APP.netlify.app/api/convert-weight?value=50&from=kilos&to=libras
-```
+9. **Probar los tres endpoints desde la URL pública**: ver la sección [Pruebas sobre la API pública](#pruebas-sobre-la-api-pública).
