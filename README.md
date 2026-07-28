@@ -295,6 +295,7 @@ https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-temperature
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/convert-temperature?value=300&from=kelvin&to=celsius
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=50&from=kilos&to=libras
 https://tarea1sistemdistribuidos-jensonperez.netlify.app/api/convert-weight?value=1000&from=gramos&to=kilos
+    
     ```
 
 ## URL pública de la API
