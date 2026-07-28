@@ -1,0 +1,28 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirecciones para exponer las funciones bajo rutas /api/*
+[[redirects]]
+  from = "/api/convert-distance"
+  to = "/.netlify/functions/convert-distance"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/convert-temperature"
+  to = "/.netlify/functions/convert-temperature"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/convert-weight"
+  to = "/.netlify/functions/convert-weight"
+  status = 200
+  force = true

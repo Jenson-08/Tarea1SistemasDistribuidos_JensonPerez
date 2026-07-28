@@ -1,0 +1,19 @@
+{
+  "name": "unit-converter-api",
+  "version": "1.0.0",
+  "description": "API REST serverless para conversión de unidades (distancia, temperatura y peso) construida con Node.js y Netlify Functions.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "keywords": [
+    "netlify-functions",
+    "rest-api",
+    "unit-converter",
+    "serverless"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
